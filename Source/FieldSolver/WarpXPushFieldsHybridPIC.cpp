@@ -300,9 +300,9 @@ void WarpX::HybridPICEvolveFields ()
         }
 
         // adds Bremsstrahlung loss using operator splitting approach
-        if(m_hybrid_pic_model->m_include_Bremsstrahlung){
-            hybrid_electron_fl->Hybrid_Electron_Bremsstrahlung(m_fields, m_hybrid_pic_model.get(), dt[0], finest_level);
-        }
+        //if(m_hybrid_pic_model->m_include_Bremsstrahlung){
+        //    hybrid_electron_fl->Hybrid_Electron_Bremsstrahlung(m_fields, m_hybrid_pic_model.get(), dt[0], finest_level);
+        //}
 
         // add source/sink term due to collisions with ions (Qei-Qie)
         // This term should also apply MCC to ions particle container
