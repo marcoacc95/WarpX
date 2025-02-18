@@ -1913,7 +1913,7 @@ class HybridPICSolver(picmistandard.base._ClassWithInit):
         A_external=None,
         solve_electron_energy_equation=False,
         include_Joule_heating=False,
-        include_Bremsstrahlung=None,
+        include_Bremsstrahlung=False,
         Zeff = None,
         **kw,
     ):
