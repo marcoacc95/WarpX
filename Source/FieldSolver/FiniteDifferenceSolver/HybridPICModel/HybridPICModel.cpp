@@ -80,8 +80,12 @@ void HybridPICModel::ReadParameters ()
     utils::parser::queryWithParser(pp_hybrid, "include_Bremsstrahlung", m_include_Bremsstrahlung);
 
     // Z effective for Bremsstrahlung power loss.
-    m_Zeff = 0.0_rt; // default
-    utils::parser::queryWithParser(pp_hybrid, "Zeff", m_Zeff);
+    m_Zeff = 0; // default
+    if(m_include_Bremsstrahlung){
+        m_Zeff = 1.0; // default if flag is True
+        utils::parser::queryWithParser(pp_hybrid, "Zeff", m_Zeff);
+    }
+    
 }
 
 void HybridPICModel::AllocateLevelMFs (

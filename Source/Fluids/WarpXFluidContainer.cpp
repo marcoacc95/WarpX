@@ -1751,7 +1751,7 @@ void WarpXFluidContainer::Hybrid_Electron_Bremsstrahlung (ablastr::fields::Multi
                     amrex::Real dW_dV = Zeff*Zeff*ne_val*ne_val*std::sqrt(Te_val/PhysConst::q_e)/constant_val;
 
                     // Te(i, j, k) and second term already in Joules
-                    Te(i, j, k) = Te(i, j, k) - dW_dV*dt*cell_volume;
+                    Te(i, j, k) = Te(i, j, k) - dW_dV*dt/ne_val;
                 }
 
             });
