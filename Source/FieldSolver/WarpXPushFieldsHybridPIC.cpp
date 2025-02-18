@@ -295,14 +295,14 @@ void WarpX::HybridPICEvolveFields ()
         hybrid_electron_fl->HybridQDSMCUpdateTe(m_fields, m_hybrid_pic_model->m_gamma, m_hybrid_pic_model->m_n_floor, finest_level);
 
         // adds Joule heating using operator splitting approach
-        //if(m_hybrid_pic_model->m_include_Joule_heating){
-        //    hybrid_electron_fl->Hybrid_Electron_Joule_Heating(m_fields, m_hybrid_pic_model.get(), dt[0], finest_level);
-        //}
+        if(m_hybrid_pic_model->m_include_Joule_heating){
+            hybrid_electron_fl->Hybrid_Electron_Joule_Heating(m_fields, m_hybrid_pic_model.get(), dt[0], finest_level);
+        }
 
         // adds Bremsstrahlung loss using operator splitting approach
-        //if(m_hybrid_pic_model->m_include_Bremsstrahlung){
-        //    hybrid_electron_fl->Hybrid_Electron_Bremsstrahlung(m_fields, m_hybrid_pic_model.get(), dt[0], finest_level);
-        //}
+        if(m_hybrid_pic_model->m_include_Bremsstrahlung){
+            hybrid_electron_fl->Hybrid_Electron_Bremsstrahlung(m_fields, m_hybrid_pic_model.get(), dt[0], finest_level);
+        }
 
         // add source/sink term due to collisions with ions (Qei-Qie)
         // This term should also apply MCC to ions particle container
