@@ -1748,7 +1748,7 @@ void WarpXFluidContainer::Hybrid_Electron_Bremsstrahlung (ablastr::fields::Multi
                     // calculate power loss per unit volugit statme due to Bremsstrahlung
                     // Expression gives value in W/m^3
                     // Te in sqrt() is in eV in this formula
-                    amrex::Real dW_dV = Zeff*Zeff*ne_val*ne_val*std::sqrt(Te_val/PhysConst::q_e)/constant_val;
+                    amrex::Real dW_dV = Zeff*Zeff*ne_val*ne_val*std::sqrt(Te_val/PhysConst::q_e)/constant_val; // W/m^3
 
                     // Te(i, j, k) and second term already in Joules
                     Te(i, j, k) = Te(i, j, k) - dW_dV*dt/ne_val;
