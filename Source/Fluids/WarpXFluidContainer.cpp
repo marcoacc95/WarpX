@@ -1715,7 +1715,7 @@ void WarpXFluidContainer::Hybrid_Electron_Bremsstrahlung (ablastr::fields::Multi
     // Once Hybrid PIC is extended to do more than 1 ion species
     // Zeff should be calculated from rho_total and rho of each species.
     const auto Zeff = hybrid_model->m_Zeff;
-    amrex::Real constant_val = 5.91361e37;
+    amrex::Real constant_val = 5.91361e37; // SI units
 
     // For safety condition (divition by rho)
     amrex::Real rho_floor = PhysConst::q_e*hybrid_model->m_n_floor;
@@ -1752,6 +1752,7 @@ void WarpXFluidContainer::Hybrid_Electron_Bremsstrahlung (ablastr::fields::Multi
 
                     // Te(i, j, k) and second term already in Joules
                     Te(i, j, k) = Te(i, j, k) - dW_dV*dt/ne_val;
+                    // fix this formula: use -dW_dV*dt/(3.0/2*ne_val);
                 }
 
             });
