@@ -1680,20 +1680,18 @@ void WarpXFluidContainer::Hybrid_Electron_Joule_Heating (ablastr::fields::MultiF
 
                     // calculate eta*J^2
                     // eta expression and units should be in SI
-                    // so all variables here go in SI
+                    // so all variables here go in SI inclduing the temperature in K
                     amrex::Real eta_J2 = eta(rho_val, jtot_val, Te_val)*jtot_val*jtot_val;
 
                     // Te(i, j, k) and second term already in Joules so no need to divide eta_J2 by kb
                     // Te_val in K so need to convert to Joules
-                    Te(i, j, k) =  Te(i, j, k) + dt*eta_J2/(3.0/2*ne_val);
+                    Te(i, j, k) =  Te(i, j, k) + dt*eta_J2/(1.5*ne_val);
                 }
-
             });
         }
-
-    // Fill Boundary ?
     m_fields.get(name_mf_T, lev)->FillBoundary(m_fields.get(name_mf_T, lev)->nGrowVect(), period);
 }
+
 
 // To Do:
 // pass Te and rho multifabs as arguments too !
@@ -1743,21 +1741,18 @@ void WarpXFluidContainer::Hybrid_Electron_Bremsstrahlung (ablastr::fields::Multi
 
                     amrex::Real rho_val = rho(i, j, k);
                     amrex::Real ne_val = rho_val/PhysConst::q_e;
-                    amrex::Real Te_val = Te(i, j, k); // in J
 
-                    // calculate power loss per unit volugit statme due to Bremsstrahlung
+                    // calculate power loss per unit volume due to Bremsstrahlung
                     // Expression gives value in W/m^3
                     // Te in sqrt() is in eV in this formula
-                    amrex::Real dW_dV = Zeff*Zeff*ne_val*ne_val*std::sqrt(Te_val/PhysConst::q_e)/constant_val; // W/m^3
+                    amrex::Real dW_dV = Zeff*Zeff*ne_val*ne_val*std::sqrt(Te(i, j, k)/PhysConst::q_e)/constant_val; // W/m^3
 
                     // Te(i, j, k) and second term already in Joules
-                    Te(i, j, k) = Te(i, j, k) - dW_dV*dt/ne_val;
-                    // fix this formula: use -dW_dV*dt/(3.0/2*ne_val);
+                    // no need to divide second term by kb!
+                    Te(i, j, k) = Te(i, j, k) - dW_dV*dt/(1.5*ne_val);
                 }
 
             });
         }
-
-    // Fill Boundary ?
     m_fields.get(name_mf_T, lev)->FillBoundary(m_fields.get(name_mf_T, lev)->nGrowVect(), period);
 }
